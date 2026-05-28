@@ -1,0 +1,102 @@
+/* ===== CONTÊINER DO PLAYER ATIVO ===== */
+.curtidas-player-container {
+    display: flex !important; 
+    flex-direction: column !important; 
+    height: calc(100vh - 96px); /* Desconta a barra de navegação inferior */
+    width: 100%;
+    align-items: center !important; 
+    justify-content: space-between !important; 
+    padding: 10px 0 20px 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Bloco superior agrupado */
+.player-header-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.player-cover-container {
+    width: 180px; 
+    height: 180px; 
+    border-radius: 50%; 
+    overflow: hidden;
+    margin: 10px 0; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 40px rgba(146,76,255,0.2);
+    background: #111; 
+    border: 2px solid rgba(255,255,255,0.05);
+}
+.player-cover { width: 100%; height: 100%; object-fit: cover; }
+
+.player-meta { text-align: center; margin-bottom: 10px; width: 100%; padding: 0 20px; }
+.player-meta h2 { font-size: 20px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; color: white; }
+.player-meta p { font-size: 13px; color: rgba(255,255,255,0.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; }
+
+/* ===== CONTAINER DE LETRAS SINCRONIZADAS ===== */
+.player-lyrics-container {
+    flex: 1; 
+    width: 100%; 
+    overflow-y: auto; 
+    margin: 10px 0; 
+    padding: 20px 24px; 
+    text-align: center; 
+    mask-image: linear-gradient(to bottom, transparent 0%, white 20%, white 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, white 20%, white 80%, transparent 100%);
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+}
+.player-lyrics-container::-webkit-scrollbar { display: none; }
+.lyric-line { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.25); padding: 10px 0; transition: all 0.3s ease; transform: scale(0.95); }
+.lyric-line.active { color: #b07fff; text-shadow: 0 0 15px rgba(146,76,255,0.6); transform: scale(1.05); font-size: 18px; }
+
+/* ===== BLOCO INFERIOR DE CONTROLES ===== */
+.player-controls-block {
+    width: 100%;
+    padding: 0 24px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.player-timeline { width: 100%; margin-bottom: 12px; }
+.progress-bar-container { width: 100%; display: flex; align-items: center; }
+.player-timeline input[type="range"] {
+    -webkit-appearance: none; width: 100%; background: rgba(255,255,255,0.1); height: 4px; border-radius: 2px; outline: none; cursor: pointer; 
+}
+.player-timeline input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: 0 0 10px rgba(146,76,255,0.8); cursor: pointer; 
+}
+.time-info { display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 6px; font-weight: 500; }
+
+.player-controls {
+    display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 20px !important; width: 100% !important; box-sizing: border-box;
+}
+.control-btn {
+    background: transparent !important; border: none !important; color: rgba(255, 255, 255, 0.4) !important; cursor: pointer !important; transition: all 0.2s ease !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 8px !important;
+}
+.control-btn:hover { color: white !important; }
+.control-btn.active { color: #b07fff !important; text-shadow: 0 0 10px rgba(176,127,255,0.4); }
+.control-btn span { font-size: 24px !important; }
+.control-btn.play-btn { background: white !important; color: black !important; width: 52px !important; height: 52px !important; border-radius: 50% !important; box-shadow: 0 6px 16px rgba(255, 255, 255, 0.1) !important; }
+.control-btn.play-btn:hover { transform: scale(1.05); color: black !important; }
+.control-btn.play-btn span { font-size: 28px !important; color: black !important; }
+
+/* ===== ESTADO VAZIO DO PLAYER (ROBOZINHO) ===== */
+.player-empty-state-container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: calc(100vh - 120px); text-align: center; padding: 0 30px; }
+.robot-animation-box { width: 80px; height: 80px; background: rgba(146, 76, 255, 0.1); border: 1px solid rgba(146, 76, 255, 0.2); border-radius: 24px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; animation: robotFloat 4s ease-in-out infinite; }
+.robot-icon { font-size: 40px; color: #b07fff; }
+.player-empty-state-container h2 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.player-empty-state-container p { font-size: 13px; color: rgba(255, 255, 255, 0.4); line-height: 1.6; }
+
+/* ===== BARRA DE NAVEGAÇÃO DE ABAS FIXA ===== */
+.nav-bar {
+    position: fixed !important; bottom: 0 !important; left: 0 !important; width: 100% !important; height: 72px !important; background: #09030f !important; border-top: 1px solid rgba(255, 255, 255, 0.05) !important; display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: space-around !important; padding: 0 16px !important; z-index: 999 !important; box-sizing: border-box;
+}
+.nav-btn {
+    background: transparent !important; border: none !important; color: rgba(255, 255, 255, 0.4) !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 4px !important; cursor: pointer !important; transition: all 0.2s ease !important; flex: 1 !important; height: 100% !important; font-size: 11px !important; font-weight: 500 !important;
+}
+.nav-btn.active { color: #b07fff !important; }
+.nav-btn span { font-size: 24px !important; display: block; }

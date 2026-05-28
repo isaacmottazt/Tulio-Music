@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player Premium</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+    <link rel="stylesheet" href="main-views.css">
+</head>
+<body>
+
+    <audio id="audio" style="display: none;"></audio>
+
+    <div class="app-container">
+        
+        <header class="app-header">
+            <h1 id="homeTitle">Músicas</h1>
+            
+            <div id="searchWrapper" class="search-container">
+                <span class="material-symbols-rounded">search</span>
+                <input type="text" id="searchInput" placeholder="Pesquisar por título ou artista...">
+            </div>
+        </header>
+
+        <div id="toastContainer" class="toast-container"></div>
+
+        <main class="main-content">
+
+            <div id="musicas" class="tab-content active">
+                <div id="musicList">
+                    </div>
+            </div>
+
+            <div id="playlists" class="tab-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Minhas Playlists</h2>
+                    <button id="openCreatePlaylistModalBtn" class="add-playlist-top-btn">
+                        <span class="material-symbols-rounded">add</span> Nova Playlist
+                    </button>
+                </div>
+
+                <div id="playlistsRootView">
+                    <div class="playlist-row-item" id="likedMusicsPlaylistRow" style="border-left: 4px solid #ff4a75 !important;">
+                        <div class="playlist-item-left" onclick="window.openLikedMusicsDetail()">
+                            <div class="playlist-icon-box" style="background: rgba(255, 74, 117, 0.15) !important; color: #ff4a75 !important;">
+                                <span class="material-symbols-rounded">favorite</span>
+                            </div>
+                            <div class="playlist-item-info">
+                                <h3>Músicas Curtidas</h3>
+                                <p id="likedMusicsCountTxt">0 músicas</p>
+                            </div>
+                        </div>
+                        <div></div>
+                    </div>
+
+                    <div id="playlistsContainer"></div>
+                </div>
+
+                <div id="playlistDetailView" style="display: none;">
+                    <div class="playlist-detail-header">
+                        <button id="backToPlaylistsBtn">
+                            <span class="material-symbols-rounded">arrow_back</span>
+                        </button>
+                        <div class="playlist-info-meta">
+                            <h2 id="playlistDetailName">Nome da Playlist</h2>
+                            <p id="playlistDetailCount">0 músicas</p>
+                        </div>
+                    </div>
+                    <div id="playlistTracksList"></div>
+                </div>
+            </div>
+
+            <div id="adicionar" class="tab-content">
+                <h2>Cadastrar Música</h2>
+                <form id="addMusicForm" class="premium-form" onsubmit="event.preventDefault();">
+                    <div class="form-group">
+                        <label for="formTitle">Título da Música</label>
+                        <input type="text" id="formTitle" required placeholder="Ex: Sinais de Fogo">
+                    </div>
+                    <div class="form-group">
+                        <label for="formArtist">Artista / Banda</label>
+                        <input type="text" id="formArtist" required placeholder="Ex: Preto no Branco">
+                    </div>
+                    <div class="form-group">
+                        <label for="formMusicFile">Arquivo de Áudio (.mp3)</label>
+                        <input type="file" id="formMusicFile" accept="audio/*" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formCoverFile">Capa da Música (Imagem)</label>
+                        <input type="file" id="formCoverFile" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="formLrcFile">Arquivo de Letras Sincronizadas (.lrc)</label>
+                        <input type="file" id="formLrcFile" accept=".lrc">
+                    </div>
+                    <button type="submit" class="submit-form-btn">Enviar para o Banco</button>
+                </form>
+            </div>
+
+        </main>
+
+        <div id="playerBottomBar" class="player-bottom-bar" style="display: none;">
+            <div class="player-bottom-content" onclick="window.expandLyricsScreen()">
+                <img id="playerBottomCover" src="" alt="Capa" class="player-bottom-cover">
+                <div class="player-bottom-info">
+                    <h4 id="playerBottomTitle">Título da Música</h4>
+                    <p id="playerBottomArtist">Artista</p>
+                </div>
+            </div>
+            <div class="player-bottom-controls">
+                <button id="playerBottomPlayBtn" class="player-bottom-play-btn">
+                    <span class="material-symbols-rounded">play_arrow</span>
+                </button>
+            </div>
+            <div class="mini-progress-bg">
+                <div id="miniProgressBar" class="mini-progress-bar" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <nav class="nav-bar">
+            <button class="nav-btn active" data-tab="musicas">
+                <span class="material-symbols-rounded">music_note</span>
+                <p>Músicas</p>
+            </button>
+            <button class="nav-btn" data-tab="playlists">
+                <span class="material-symbols-rounded">library_music</span>
+                <p>Playlists</p>
+            </button>
+            <button class="nav-btn" data-tab="adicionar">
+                <span class="material-symbols-rounded">add_box</span>
+                <p>Adicionar</p>
+            </button>
+        </nav>
+
+    </div>
+
+    <div id="lyricsFullScreen" class="lyrics-full-screen">
+        <header class="lyrics-header">
+            <button onclick="window.collapseLyricsScreen()" class="close-lyrics-btn">
+                <span class="material-symbols-rounded">keyboard_arrow_down</span>
+            </button>
+            <div class="lyrics-header-meta">
+                <h3 id="lyricsTrackTitle">Título</h3>
+                <p id="lyricsTrackArtist">Artista</p>
+            </div>
+            <div style="width: 40px;"></div> </header>
+
+        <div id="lyricsScroller" class="lyrics-scroller">
+            <div id="lyricsContainer" class="lyrics-container-content">
+                </div>
+        </div>
+
+        <footer class="lyrics-footer">
+            <div class="progress-wrapper">
+                <span id="currentTime" class="time-txt">00:00</span>
+                <div id="progressBar" class="progress-bar-bg">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <span id="totalTime" class="time-txt">00:00</span>
+            </div>
+
+            <div class="controls-wrapper">
+                <button id="shuffleBtn" class="control-extra-btn">
+                    <span class="material-symbols-rounded">shuffle</span>
+                </button>
+                <button id="prevBtn" class="control-main-btn">
+                    <span class="material-symbols-rounded">skip_previous</span>
+                </button>
+                <button id="bigPlayBtn" class="control-play-center-btn">
+                    <span class="material-symbols-rounded">play_arrow</span>
+                </button>
+                <button id="nextBtn" class="control-main-btn">
+                    <span class="material-symbols-rounded">skip_next</span>
+                </button>
+                <button id="repeatBtn" class="control-extra-btn">
+                    <span class="material-symbols-rounded">repeat</span>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <div id="playlistModal" class="modal-backdrop">
+        <div class="modal-content-box">
+            <h3 id="modalPlaylistTitle">Criar Nova Playlist</h3>
+            <input type="text" id="newPlaylistName" placeholder="Digite o nome da playlist...">
+            <div class="modal-actions-wrapper">
+                <button id="cancelModalBtn">Cancelar</button>
+                <button id="confirmModalBtn">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="contextMenuBackdrop" class="context-menu-backdrop"></div>
+    <div id="contextMenuModal" class="context-menu-modal"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="shared-data.js"></script>
+    <script src="player-core.js"></script>
+    <script src="player-ui.js"></script>
+    <script src="player-audio-lyrics.js"></script>
+    <script src="player-playlists.js"></script>
+    <script src="player-menus-forms.js"></script>
+</body>
+</html>
